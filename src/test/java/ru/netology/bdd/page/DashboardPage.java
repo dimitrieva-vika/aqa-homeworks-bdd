@@ -11,13 +11,13 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
 
-    private SelenideElement heading = $("[data-test-id='dashboard']");
+    // Используем h2 с текстом "Личный кабинет" вместо data-test-id
+    private SelenideElement heading = $("h2.heading");
     private ElementsCollection cards = $$(".list__item div[data-test-id]");
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
 
     public DashboardPage() {
-        // Явное ожидание загрузки страницы
         heading.shouldBe(visible, Duration.ofSeconds(15));
     }
 
