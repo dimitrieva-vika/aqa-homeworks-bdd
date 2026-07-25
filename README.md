@@ -19,24 +19,21 @@
 
 | Тест | Статус | Описание |
 |------|--------|----------|
-| shouldTransferFromFirstToSecond | ❌ FAILED | Перевод с первой карты на вторую |
-| shouldTransferFromSecondToFirst | ❌ FAILED | Перевод со второй карты на первую |
-| shouldShowErrorWhenAmountExceedsBalance | ❌ FAILED | Ошибка при превышении баланса (БАГ #1) |
-| shouldShowErrorWhenAmountIsZeroOrNegative | ❌ FAILED | Ошибка при нулевой/отрицательной сумме (БАГ #2) |
+| shouldTransferFromFirstToSecond | ❌ FAILED | Перевод с первой карты на вторую (БАГ #1) |
+| shouldTransferFromSecondToFirst | ❌ FAILED | Перевод со второй карты на первую (БАГ #1) |
+| shouldShowErrorWhenAmountExceedsBalance | ❌ FAILED | Ошибка при превышении баланса (БАГ #2) |
 
-**Итог:** ⚠️ 0 тестов пройдены, 4 теста упали (найдены баги)
+**Итог:** ⚠️ 0 тестов пройдены, 3 теста упали (найдены 2 бага)
 
 ### Обнаруженные баги
 
-1. **[Issue #1](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/1)** - При превышении баланса не показывается сообщение об ошибке
-2. **[Issue #2](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/2)** - Отсутствует проверка на нулевую или отрицательную сумму перевода
-3. **[Issue #3](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/3)** - ID карт захардкожены в тестах
+1. **[Issue #1](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/1)** - ID карт не совпадают (тесты не могут найти карты)
+2. **[Issue #2](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/2)** - При превышении баланса не показывается сообщение об ошибке
 
 ## Запуск тестов
 
 ### Локальный запуск
-1. Запустите SUT в тестовом режиме:
 
+1. Запустите SUT в тестовом режиме:
+```bash
 java -jar ./artifacts/app-ibank-build-for-testers.jar -P:profile=test
-2. В другом терминале выполните:
-./gradlew test
