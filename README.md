@@ -19,16 +19,16 @@
 
 | Тест | Статус | Описание |
 |------|--------|----------|
-| shouldTransferFromFirstToSecond | ❌ FAILED | Перевод с первой карты на вторую (БАГ #1) |
-| shouldTransferFromSecondToFirst | ❌ FAILED | Перевод со второй карты на первую (БАГ #1) |
-| shouldShowErrorWhenAmountExceedsBalance | ❌ FAILED | Ошибка при превышении баланса (БАГ #2) |
+| shouldTransferFromFirstToSecond | ❌ FAILED | Перевод с первой карты на вторую (БАГ #2) |
+| shouldTransferFromSecondToFirst | ❌ FAILED | Перевод со второй карты на первую (БАГ #2) |
+| shouldShowErrorWhenAmountExceedsBalance | ❌ FAILED | Ошибка при превышении баланса (БАГ #1) |
 
 **Итог:** ⚠️ 0 тестов пройдены, 3 теста упали (найдены 2 бага)
 
 ### Обнаруженные баги
 
-1. **[Issue #1](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/1)** - ID карт не совпадают (тесты не могут найти карты)
-2. **[Issue #2](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/2)** - При превышении баланса не показывается сообщение об ошибке
+1. **[Issue #1](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/1)** - При превышении баланса не показывается сообщение об ошибке
+2. **[Issue #2](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/2)** - ID карт не совпадают (тесты не могут найти карты)
 
 ## Запуск тестов
 
