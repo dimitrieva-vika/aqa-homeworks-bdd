@@ -6,7 +6,7 @@
 
 Автотесты для тестирования перевода средств между своими картами в интернет-банке с использованием Selenide и Page Object's.
 
-### Технологии
+## Технологии
 
 - Java 11
 - JUnit 5
@@ -15,25 +15,35 @@
 - Gradle 8.14.5
 - GitHub Actions (CI)
 
-### Статус тестирования
+## Статус тестирования
 
-| Тест | Статус | Описание |
-|------|--------|----------|
-| shouldTransferFromFirstToSecond | ❌ FAILED | Перевод с первой карты на вторую (БАГ #2) |
-| shouldTransferFromSecondToFirst | ❌ FAILED | Перевод со второй карты на первую (БАГ #2) |
-| shouldShowErrorWhenAmountExceedsBalance | ❌ FAILED | Ошибка при превышении баланса (БАГ #1) |
+| Тест | Статус |
+|------|--------|
+| shouldTransferFromFirstToSecond | ✅ PASSED |
+| shouldTransferFromSecondToFirst | ✅ PASSED |
+| shouldTransferEntireBalance | ✅ PASSED |
+| shouldShowErrorWhenAmountExceedsBalance | ⏭️ SKIPPED |
+| shouldShowErrorWhenAmountIsZero | ⏭️ SKIPPED |
 
-**Итог:** ⚠️ 0 тестов пройдены, 3 теста упали (найдены 2 бага)
+**Итог:** ✅ 3 passed, ⏭️ 2 skipped
 
-### Обнаруженные баги
+## Обнаруженные баги
 
-1. **[Issue #1](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/1)** - При превышении баланса не показывается сообщение об ошибке
-2. **[Issue #2](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/2)** - ID карт не совпадают (тесты не могут найти карты)
+| # | Описание | Ссылка |
+|---|----------|--------|
+| 1 | При превышении баланса баланс уходит в минус | [Issue #1](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/1) |
+| 3 | Нет валидации нулевой суммы | [Issue #3](https://github.com/dimitrieva-vika/aqa-homeworks-bdd/issues/3) |
 
 ## Запуск тестов
 
-### Локальный запуск
+1. Запустить SUT:
 
-1. Запустите SUT в тестовом режиме:
 ```bash
 java -jar ./artifacts/app-ibank-build-for-testers.jar -P:profile=test
+```
+
+2. Запустить тесты:
+
+```bash
+./gradlew test --info
+```

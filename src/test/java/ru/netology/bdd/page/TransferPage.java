@@ -11,15 +11,22 @@ public class TransferPage {
     private SelenideElement fromField = $("[data-test-id='from'] input");
     private SelenideElement transferButton = $("[data-test-id='action-transfer']");
     private SelenideElement cancelButton = $("[data-test-id='action-cancel']");
+    private SelenideElement heading = $(".heading_size_xl");
 
     public TransferPage() {
         amountField.shouldBe(visible);
+        heading.shouldHave(com.codeborne.selenide.Condition.text("Пополнение карты"));
     }
 
-    public DashboardPage transfer(int amount, String fromCardId, String toCardId) {
+    public DashboardPage transfer(int amount, String fromCardNumber) {
         amountField.setValue(String.valueOf(amount));
-        fromField.setValue(fromCardId);
+        fromField.setValue(fromCardNumber);
         transferButton.click();
+        return new DashboardPage();
+    }
+
+    public DashboardPage cancel() {
+        cancelButton.click();
         return new DashboardPage();
     }
 }
