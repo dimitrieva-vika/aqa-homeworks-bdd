@@ -20,7 +20,7 @@ public class TransferTest {
 
     @BeforeAll
     static void setUpAll() {
-        // Configuration.headless = true;  // закомментировано для локального просмотра
+        // Configuration.headless = true;
     }
 
     @BeforeEach
@@ -36,6 +36,8 @@ public class TransferTest {
     @DisplayName("Should transfer money from first card to second card")
     void shouldTransferFromFirstToSecond() {
         List<String> cardIds = dashboardPage.getAllCardIds();
+        assertEquals(2, cardIds.size(), "Должно быть 2 карты");
+
         String firstCardId = cardIds.get(0);
         String secondCardId = cardIds.get(1);
 
@@ -49,16 +51,16 @@ public class TransferTest {
         int firstCardBalanceAfter = dashboardPage.getCardBalance(firstCardId);
         int secondCardBalanceAfter = dashboardPage.getCardBalance(secondCardId);
 
-        assertEquals(firstCardBalanceBefore - amount, firstCardBalanceAfter,
-                "Баланс первой карты должен уменьшиться на сумму перевода");
-        assertEquals(secondCardBalanceBefore + amount, secondCardBalanceAfter,
-                "Баланс второй карты должен увеличиться на сумму перевода");
+        assertEquals(firstCardBalanceBefore - amount, firstCardBalanceAfter);
+        assertEquals(secondCardBalanceBefore + amount, secondCardBalanceAfter);
     }
 
     @Test
     @DisplayName("Should transfer money from second card to first card")
     void shouldTransferFromSecondToFirst() {
         List<String> cardIds = dashboardPage.getAllCardIds();
+        assertEquals(2, cardIds.size(), "Должно быть 2 карты");
+
         String firstCardId = cardIds.get(0);
         String secondCardId = cardIds.get(1);
 
@@ -72,16 +74,16 @@ public class TransferTest {
         int firstCardBalanceAfter = dashboardPage.getCardBalance(firstCardId);
         int secondCardBalanceAfter = dashboardPage.getCardBalance(secondCardId);
 
-        assertEquals(firstCardBalanceBefore + amount, firstCardBalanceAfter,
-                "Баланс первой карты должен увеличиться на сумму перевода");
-        assertEquals(secondCardBalanceBefore - amount, secondCardBalanceAfter,
-                "Баланс второй карты должен уменьшиться на сумму перевода");
+        assertEquals(firstCardBalanceBefore + amount, firstCardBalanceAfter);
+        assertEquals(secondCardBalanceBefore - amount, secondCardBalanceAfter);
     }
 
     @Test
     @DisplayName("Should transfer the entire balance")
     void shouldTransferEntireBalance() {
         List<String> cardIds = dashboardPage.getAllCardIds();
+        assertEquals(2, cardIds.size(), "Должно быть 2 карты");
+
         String firstCardId = cardIds.get(0);
         String secondCardId = cardIds.get(1);
 
@@ -95,10 +97,8 @@ public class TransferTest {
         int firstCardBalanceAfter = dashboardPage.getCardBalance(firstCardId);
         int secondCardBalanceAfter = dashboardPage.getCardBalance(secondCardId);
 
-        assertEquals(0, firstCardBalanceAfter,
-                "Баланс первой карты должен стать 0");
-        assertEquals(secondCardBalanceBefore + amount, secondCardBalanceAfter,
-                "Баланс второй карты должен увеличиться на сумму перевода");
+        assertEquals(0, firstCardBalanceAfter);
+        assertEquals(secondCardBalanceBefore + amount, secondCardBalanceAfter);
     }
 
     @Disabled("Bug #1: При переводе суммы, превышающей баланс карты, баланс становится отрицательным")
@@ -109,17 +109,14 @@ public class TransferTest {
         String firstCardId = cardIds.get(0);
         String secondCardId = cardIds.get(1);
 
-        // Сначала обнулим первую карту
         int firstCardBalance = dashboardPage.getCardBalance(firstCardId);
         var transferPage = dashboardPage.chooseCardForDeposit(secondCardId);
         dashboardPage = transferPage.transfer(firstCardBalance, DataHelper.getFirstCardNumber());
 
-        // Теперь пытаемся перевести больше, чем есть
         int amount = 1000;
         transferPage = dashboardPage.chooseCardForDeposit(secondCardId);
         dashboardPage = transferPage.transfer(amount, DataHelper.getFirstCardNumber());
 
-        // Должна появиться ошибка
         dashboardPage.verifyErrorNotification("Ошибка! Недостаточно средств на карте");
     }
 

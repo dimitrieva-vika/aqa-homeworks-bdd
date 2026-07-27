@@ -7,7 +7,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -15,13 +14,16 @@ import static com.codeborne.selenide.Selenide.$$;
 public class DashboardPage {
 
     private SelenideElement heading = $("[data-test-id='dashboard']");
-    private ElementsCollection cards = $$(".list__item div[data-test-id]");
+    // Только div с data-test-id внутри li с классом list__item
+    private ElementsCollection cards = $$("li.list__item div[data-test-id]");
     private SelenideElement errorNotification = $("[data-test-id='error-notification']");
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
 
     public DashboardPage() {
         heading.shouldBe(visible, Duration.ofSeconds(15));
+        // Ждем появления хотя бы одной карты
+        cards.first().shouldBe(visible, Duration.ofSeconds(15));
     }
 
     public List<String> getAllCardIds() {
@@ -53,15 +55,11 @@ public class DashboardPage {
 
     public void verifyErrorNotification(String expectedText) {
         errorNotification.shouldBe(visible);
-        errorNotification.$(".notification__content").shouldHave(text(expectedText));
+        errorNotification.$(".notification__content").shouldHave(com.codeborne.selenide.Condition.text(expectedText));
     }
 
     public void verifyErrorNotification() {
         errorNotification.shouldBe(visible);
-    }
-
-    public void verifyNoErrorNotification() {
-        errorNotification.shouldNotBe(visible);
     }
 
     private int extractBalance(String text) {
