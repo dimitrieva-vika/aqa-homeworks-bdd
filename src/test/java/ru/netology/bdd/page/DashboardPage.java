@@ -4,9 +4,8 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -14,7 +13,6 @@ import static com.codeborne.selenide.Selenide.$$;
 public class DashboardPage {
 
     private SelenideElement heading = $("[data-test-id='dashboard']");
-    // Только div с data-test-id внутри li с классом list__item
     private ElementsCollection cards = $$("li.list__item div[data-test-id]");
     private SelenideElement errorNotification = $("[data-test-id='error-notification']");
     private final String balanceStart = "баланс: ";
@@ -22,19 +20,7 @@ public class DashboardPage {
 
     public DashboardPage() {
         heading.shouldBe(visible, Duration.ofSeconds(15));
-        // Ждем появления хотя бы одной карты
         cards.first().shouldBe(visible, Duration.ofSeconds(15));
-    }
-
-    public List<String> getAllCardIds() {
-        List<String> cardIds = new ArrayList<>();
-        for (SelenideElement card : cards) {
-            String cardId = card.getAttribute("data-test-id");
-            if (cardId != null && !cardId.isEmpty()) {
-                cardIds.add(cardId);
-            }
-        }
-        return cardIds;
     }
 
     public int getCardBalance(String cardId) {
@@ -55,7 +41,7 @@ public class DashboardPage {
 
     public void verifyErrorNotification(String expectedText) {
         errorNotification.shouldBe(visible);
-        errorNotification.$(".notification__content").shouldHave(com.codeborne.selenide.Condition.text(expectedText));
+        errorNotification.$(".notification__content").shouldHave(text(expectedText));
     }
 
     public void verifyErrorNotification() {
