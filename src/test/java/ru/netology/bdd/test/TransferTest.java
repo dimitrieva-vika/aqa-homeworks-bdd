@@ -48,7 +48,7 @@ public class TransferTest {
         int secondCardBalanceBefore = dashboardPage.getCardBalance(secondCard.getId());
 
         // 2. Считаем сумму перевода (половина баланса первой карты)
-        int amount = firstCardBalanceBefore / 2;
+        int amount = DataHelper.calculateTransferAmount(firstCardBalanceBefore);
 
         // 3. Считаем ОЖИДАЕМЫЕ балансы после перевода
         int expectedFirstBalance = firstCardBalanceBefore - amount;
@@ -77,7 +77,7 @@ public class TransferTest {
         int secondCardBalanceBefore = dashboardPage.getCardBalance(secondCard.getId());
 
         // 2. Считаем сумму перевода (половина баланса второй карты)
-        int amount = secondCardBalanceBefore / 2;
+        int amount = DataHelper.calculateTransferAmount(secondCardBalanceBefore);
 
         // 3. Считаем ОЖИДАЕМЫЕ балансы после перевода
         int expectedFirstBalance = firstCardBalanceBefore + amount;
@@ -106,7 +106,7 @@ public class TransferTest {
         int secondCardBalanceBefore = dashboardPage.getCardBalance(secondCard.getId());
 
         // 2. Считаем сумму перевода (весь баланс первой карты)
-        int amount = firstCardBalanceBefore;
+        int amount = DataHelper.calculateFullTransferAmount(firstCardBalanceBefore);
 
         // 3. Считаем ОЖИДАЕМЫЕ балансы после перевода
         int expectedFirstBalance = 0;
@@ -135,7 +135,7 @@ public class TransferTest {
         int secondCardBalanceBefore = dashboardPage.getCardBalance(secondCard.getId());
 
         // 2. Сумма перевода превышает баланс первой карты
-        int amount = firstCardBalanceBefore + 1000;
+        int amount = DataHelper.calculateExceedAmount(firstCardBalanceBefore);
 
         // 3. Ожидаемые балансы - НЕ ДОЛЖНЫ ИЗМЕНИТЬСЯ (так как должна быть ошибка)
         int expectedFirstBalance = firstCardBalanceBefore;

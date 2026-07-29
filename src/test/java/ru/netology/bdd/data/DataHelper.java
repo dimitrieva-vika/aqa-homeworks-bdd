@@ -48,4 +48,31 @@ public class DataHelper {
                 10000
         );
     }
+
+    /**
+     * Рассчитывает сумму перевода как половину остатка на карте списания
+     * @param balance баланс карты списания
+     * @return сумма перевода (половина от модуля баланса)
+     */
+    public static int calculateTransferAmount(int balance) {
+        return Math.abs(balance) / 2;
+    }
+
+    /**
+     * Рассчитывает сумму перевода как весь остаток на карте списания
+     * @param balance баланс карты списания
+     * @return сумма перевода (весь модуль баланса)
+     */
+    public static int calculateFullTransferAmount(int balance) {
+        return Math.abs(balance);
+    }
+
+    /**
+     * Рассчитывает сумму, превышающую баланс карты списания
+     * @param balance баланс карты списания
+     * @return сумма перевода (баланс + 1000)
+     */
+    public static int calculateExceedAmount(int balance) {
+        return Math.abs(balance) + 1000;
+    }
 }
